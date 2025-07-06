@@ -1,3 +1,5 @@
+// Updated script.js with UPI payment + UTR submission + daily return
+
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let currentUser = null;
 let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
@@ -86,24 +88,29 @@ function loadPlans() {
       <p>Daily Return: ₹${plan.daily}</p>
       <p>Duration: ${plan.days} Days</p>
       <p>Total: ₹${plan.daily * plan.days}</p>
-      <button onclick='buyPlan(${JSON.stringify(plan)})'>Buy Now</button>
+      <button onclick='confirmPayment(${JSON.stringify(plan)})'>Buy Now</button>
       <button onclick='referFriend()'>Refer a Friend</button>
     `;
     box.appendChild(div);
   });
 }
 
-function buyPlan(plan) {
-  const upi = prompt("Enter your UPI ID");
-  const utr = prompt("Enter your UTR Number after payment to xixam.hishamm@fam");
-  if (!upi || !utr) return alert("UPI and UTR required");
+function confirmPayment(plan) {
+  const payMsg = `Please pay ₹${plan.amount} to UPI ID: xixam.hishamm@fam`;
+  alert(payMsg);
+
+  const upi = prompt("Enter your UPI ID after payment:");
+  const utr = prompt("Enter your UTR Number:");
+
+  if (!upi || !utr) return alert("UPI and UTR are required");
+
   currentUser.plan = plan;
   currentUser.upi = upi;
   currentUser.utr = utr;
   currentUser.accepted = false;
   purchases.push({ name: currentUser.name, mobile: currentUser.mobile, amount: plan.amount, upi, utr });
   saveToStorage();
-  alert("Payment submitted for admin verification");
+  alert("Submitted for admin approval");
 }
 
 function referFriend() {
