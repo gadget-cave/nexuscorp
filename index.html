@@ -3,147 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusCorp - Login/Register</title>
+    <title>NexusCorp - Login & Invest</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">NexusCorp</a>
-                <div class="nav-links">
-                    <a href="#">Login</a>
-                    <a href="#">Register</a>
-                    <a href="#">Help</a>
-                </div>
-                <a href="#" class="cta-button">Get Started</a>
+        <div class="container nav">
+            <a href="#" class="logo">NexusCorp</a>
+            <nav class="nav-links">
+                <a href="#" id="nav-login">Login</a>
+                <a href="#" id="nav-register">Register</a>
+                <a href="#" class="cta">Get Started</a>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="auth-container">
-                <div class="auth-tabs">
-                    <button class="auth-tab active" onclick="switchTab('login')">Login</button>
-                    <button class="auth-tab" onclick="switchTab('register')">Register</button>
-                </div>
-
-                <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
-                    <h2>Login to Your Account</h2>
-                    <div class="form-group">
-                        <input type="tel" id="login-mobile" placeholder="Mobile Number" pattern="[6-9]\d{9}" title="Please enter a valid 10-digit Indian mobile number" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" id="login-password" placeholder="Password" required>
-                    </div>
-                    <button type="submit" class="cta-button">Login</button>
-                </form>
-
-                <form id="register-form" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
-                    <h2>Create New Account</h2>
-                    <div class="form-group">
-                        <input type="tel" id="mobile-number" placeholder="Mobile Number" pattern="[6-9]\d{9}" title="Please enter a valid 10-digit Indian mobile number" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" id="password" placeholder="Create Password (min 6 characters)" minlength="6" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="referral-id" placeholder="Referral ID (Optional)">
-                    </div>
-                    <button type="submit" class="cta-button">Register</button>
-                </form>
+    <!-- Auth Section -->
+    <section class="hero" id="auth-section">
+        <div class="container auth-container">
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchTab('register')">Register</button>
             </div>
+
+            <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+                <h2>Login</h2>
+                <input type="tel" id="login-mobile" placeholder="Mobile Number" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit" class="cta">Login</button>
+            </form>
+
+            <form id="register-form" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
+                <h2>Register</h2>
+                <input type="tel" id="register-mobile" placeholder="Mobile Number" required>
+                <input type="password" id="register-password" placeholder="Password" required>
+                <input type="password" id="register-confirm" placeholder="Confirm Password" required>
+                <input type="text" id="register-referral" placeholder="Referral ID (Optional)">
+                <button type="submit" class="cta">Register</button>
+            </form>
         </div>
     </section>
 
-    <section class="plans-section" style="display:none;">
+    <!-- Plans Section -->
+    <section class="plans-section" id="plans-section" style="display:none">
         <div class="container">
-            <div class="section-title">
-                <h2>Investment Plans</h2>
-                <p>Choose a plan that suits your investment goals</p>
-            </div>
-            <div class="investment-image">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/30a3a22d-3044-49cf-bbbc-8fb5b30e5546.png" alt="Investment opportunities with great returns">
-            </div>
+            <h2>Choose a Plan</h2>
             <div class="plans-grid">
-                <!-- Plan cards go here -->
+                <!-- Plans dynamically inserted -->
             </div>
         </div>
     </section>
 
-    <section class="payment-section" style="display:none;">
+    <!-- Payment Section -->
+    <section class="payment-section" id="payment-section" style="display:none">
         <div class="container">
-            <div class="payment-container">
-                <h2>Complete Your Payment</h2>
-                <div id="selected-plan-info"></div>
-                <div class="payment-options">
-                    <button class="payment-option active">Recommended: UPI</button>
-                    <button class="payment-option">Bank Transfer</button>
-                    <button class="payment-option">Other Methods</button>
-                </div>
-                <div class="payment-details">
-                    <div class="upi-qr">
-                        <h3>Direct UPI Payment</h3>
-                        <p>Click below button to pay directly to:</p>
-                        <p><strong>xixam.hishamm@fam</strong></p>
-                        <button class="cta-button" onclick="startUPIPayment()">Pay with UPI</button>
-                    </div>
-                    <div class="payment-instructions">
-                        <p>Click "Pay with UPI" to open your payment app with the exact amount.</p>
-                        <p>Complete payment to: <strong>xixam.hishamm@fam</strong></p>
-                        <p>Payment ID: <span class="payment-id">NXSP123456</span></p>
-                        <p>After successful payment, click confirmation below</p>
-                        <button class="cta-button confirm-payment">I have made the payment</button>
-                    </div>
-                </div>
+            <h2>Complete Payment</h2>
+            <div id="selected-plan-info"></div>
+            <div class="payment-instructions">
+                <p>Pay to: <strong>xixam.hishamm@fam</strong></p>
+                <button class="cta" onclick="startUPIPayment()">Pay with UPI</button>
+                <button class="cta confirm-payment">I have paid</button>
             </div>
         </div>
     </section>
 
-    <section class="admin-section" style="display:none;">
+    <!-- Admin Section -->
+    <section class="admin-section" id="admin-section" style="display:none">
         <div class="container">
-            <h2>Payment Records</h2>
-            <div class="payment-records">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Mobile Number</th>
-                            <th>UPI ID</th>
-                            <th>UTR Number</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="payment-records-body"></tbody>
-                </table>
-            </div>
+            <h2>Admin - Payment Records</h2>
+            <table>
+                <thead>
+                    <tr><th>Mobile</th><th>UPI ID</th><th>UTR</th><th>Amount</th><th>Status</th></tr>
+                </thead>
+                <tbody id="payment-records-body"></tbody>
+            </table>
         </div>
     </section>
 
-    <section class="features">
-        <!-- Services listed here -->
-    </section>
-
-    <section class="testimonials">
-        <!-- Testimonials listed here -->
-    </section>
-
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <!-- Footer links -->
-            </div>
-            <div class="copyright">
-                © 2023 NexusCorp. All rights reserved.
-            </div>
+            <p>&copy; 2025 NexusCorp. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
 </html>
-
