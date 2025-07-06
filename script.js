@@ -1,58 +1,72 @@
-// NexusCorp script.js
+// scripts.js
 
-// Load registered users and payment records from localStorage
+// Registered users (mobile: password)
 let registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || {};
 let paymentRecords = JSON.parse(localStorage.getItem("paymentRecords")) || [];
 
-// Switch tabs between Login and Register
-function switchTab(tabName) {
-  const loginForm = document.getElementById("login-form");
-  const registerForm = document.getElementById("register-form");
-  const tabs = document.querySelectorAll(".auth-tab");
+let currentUser = localStorage.getItem("currentUser") || null;
 
-  if (tabName === "login") {
-    loginForm.style.display = "flex";
-    registerForm.style.display = "none";
-    tabs[0].classList.add("active");
-    tabs[1].classList.remove("active");
-  } else {
-    loginForm.style.display = "none";
-    registerForm.style.display = "flex";
-    tabs[0].classList.remove("active");
-    tabs[1].classList.add("active");
-  }
+// Handle OTP verification (simple simulation)
+let pendingOTP = null;
+
+function switchTab(tabName) {
+  document.getElementById("login-form").style.display = tabName === "login" ? "flex" : "none";
+  document.getElementById("register-form").style.display = tabName === "register" ? "flex" : "none";
+  document.getElementById("otp-form").style.display = "none";
+  document.querySelectorAll(".auth-tab").forEach((tab) => tab.classList.remove("active"));
+  document.querySelector(`.auth-tab[data-tab="${tabName}"]`).classList.add("active");
 }
 
-// Register user
 function handleRegister(event) {
   event.preventDefault();
   const mobile = document.getElementById("mobile-number").value;
   const password = document.getElementById("password").value;
-  const confirmPass = document.getElementById("confirm-password").value;
+  const confirmPassword = document.getElementById("confirm-password").value;
 
-  if (!/^[6-9]\d{9}$/.test(mobile)) return alert("Invalid mobile number");
-  if (password.length < 6) return alert("Password too short");
-  if (password !== confirmPass) return alert("Passwords do not match");
+  if (!/^\d{10}$/.test(mobile)) return alert("Invalid mobile number");
+  if (password.length < 6) return alert("Password must be at least 6 characters");
+  if (password !== confirmPassword) return alert("Passwords do not match");
   if (registeredUsers[mobile]) return alert("Mobile already registered");
 
-  registeredUsers[mobile] = password;
-  localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
-  alert("Registration successful! Login now.");
-  switchTab("login");
+  // Simulate OTP sending
+  pendingOTP = Math.floor(1000 + Math.random() * 9000);
+  localStorage.setItem("pendingRegistration", JSON.stringify({ mobile, password }));
+
+  document.getElementById("register-form").style.display = "none";
+  document.getElementById("otp-form").style.display = "flex";
+  alert(`Your OTP is ${pendingOTP} (for demo only)`);
 }
 
-// Login user
+function verifyOTP(event) {
+  event.preventDefault();
+  const entered = document.getElementById("otp-code").value;
+  const pending = JSON.parse(localStorage.getItem("pendingRegistration"));
+
+  if (!pending || parseInt(entered) !== pendingOTP) return alert("Invalid OTP");
+
+  registeredUsers[pending.mobile] = pending.password;
+  localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+  localStorage.setItem("currentUser", pending.mobile);
+
+  alert("Registration successful! Logged in.");
+  document.getElementById("otp-form").style.display = "none";
+  showPlans(pending.mobile);
+}
+
 function handleLogin(event) {
   event.preventDefault();
   const mobile = document.getElementById("login-mobile").value;
   const password = document.getElementById("login-password").value;
 
-  if (!registeredUsers[mobile]) return alert("Not registered");
+  if (!registeredUsers[mobile]) return alert("User not found");
   if (registeredUsers[mobile] !== password) return alert("Incorrect password");
 
   localStorage.setItem("currentUser", mobile);
-  document.querySelector(".hero").style.display = "none";
+  showPlans(mobile);
+}
 
+function showPlans(mobile) {
+  document.querySelector(".hero").style.display = "none";
   if (mobile === "9744340057") {
     document.querySelector(".admin-section").style.display = "block";
     loadPaymentRecords();
@@ -61,90 +75,61 @@ function handleLogin(event) {
   }
 }
 
-// Plan selection
 function selectPlan(amount) {
-  const plans = {
-    500: "Starter Plan",
-    1000: "Silver Plan",
-    2000: "Gold Plan",
-    5000: "Platinum Plan"
-  };
-  const planName = plans[amount];
   const daily = amount / 20;
   document.querySelector(".plans-section").style.display = "none";
   document.querySelector(".payment-section").style.display = "block";
   document.getElementById("selected-plan-info").innerHTML = `
     <div class="selected-plan">
-      <h3>${planName}</h3>
+      <h3>Selected Plan</h3>
       <p>Amount: ₹${amount}</p>
       <p>Daily Return: ₹${daily}</p>
-      <div class="form-group">
-        <input id="upi-id" placeholder="Enter your UPI ID" required />
-      </div>
-      <div class="form-group">
-        <input id="utr-id" placeholder="Enter UTR/Transaction ID" required />
-      </div>
-      <button class="cta-button" onclick="confirmPayment(${amount})">Submit</button>
     </div>
   `;
 }
 
-// Confirm payment
-function confirmPayment(amount) {
+document.querySelector(".confirm-payment").addEventListener("click", () => {
   const mobile = localStorage.getItem("currentUser");
-  const upiId = document.getElementById("upi-id").value;
-  const utr = document.getElementById("utr-id").value;
+  const amount = parseInt(document.querySelector(".selected-plan p:nth-child(2)").textContent.split("₹")[1]);
+  const upiId = prompt("Enter your UPI ID:");
+  const utr = prompt("Enter your UTR number:");
+
   const record = {
     mobile,
     upiId,
     utr,
     amount,
     status: "Pending",
-    accepted: false
   };
+
   paymentRecords.push(record);
   localStorage.setItem("paymentRecords", JSON.stringify(paymentRecords));
-  alert("Payment info submitted! Please wait for admin approval.");
-  document.querySelector(".payment-section").innerHTML = "<h3>Thank you! Your submission has been received.</h3>";
-}
+  alert("Payment submitted! Waiting for admin approval.");
 
-// Admin view
+  document.querySelector(".payment-section").style.display = "none";
+});
+
 function loadPaymentRecords() {
   const tbody = document.getElementById("payment-records-body");
   tbody.innerHTML = "";
-  paymentRecords.forEach((record, index) => {
+
+  paymentRecords.forEach((r, index) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${record.mobile}</td>
-      <td>${record.upiId}</td>
-      <td>${record.utr}</td>
-      <td>₹${record.amount}</td>
-      <td>${record.status}</td>
-      <td><button onclick="acceptRecord(${index})">Accept</button></td>
+      <td>${r.mobile}</td>
+      <td>${r.upiId}</td>
+      <td>${r.utr}</td>
+      <td>₹${r.amount}</td>
+      <td>${r.status}</td>
+      <td><button onclick="acceptPlan(${index})">Accept</button></td>
     `;
     tbody.appendChild(tr);
   });
 }
 
-function acceptRecord(index) {
+function acceptPlan(index) {
   paymentRecords[index].status = "Accepted";
-  paymentRecords[index].accepted = true;
   localStorage.setItem("paymentRecords", JSON.stringify(paymentRecords));
+  alert("Plan activated and marked as accepted.");
   loadPaymentRecords();
-  alert("Payment accepted.");
 }
-
-// On load, check if already logged in
-window.onload = () => {
-  const mobile = localStorage.getItem("currentUser");
-  if (mobile) {
-    document.querySelector(".hero").style.display = "none";
-    if (mobile === "9744340057") {
-      document.querySelector(".admin-section").style.display = "block";
-      loadPaymentRecords();
-    } else {
-      document.querySelector(".plans-section").style.display = "block";
-    }
-  }
-};
-
