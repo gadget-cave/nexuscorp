@@ -91,7 +91,7 @@ function loadPlans() {
     const div = document.createElement("div");
     div.className = "plan-box" + (currentUser.plan?.amount === plan.amount && currentUser.accepted ? " gold" : "");
     div.innerHTML = `
-      <img src="https://via.placeholder.com/100" />
+      <img src="https://i.ibb.co/mrHhyzPG/site-image-protein.jpg" />
       <p>Plan: ₹${plan.amount}</p>
       <p>Daily Return: ₹${plan.daily}</p>
       <p>Duration: ${plan.days} Days</p>
