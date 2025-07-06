@@ -1,4 +1,4 @@
-// Updated script.js with auto-login, no OTP, admin auto-refresh, and permanent storage
+// Updated script.js with auto-login, no OTP, admin auto-refresh, permanent storage, and tab switch
 
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let currentUser = null;
@@ -18,6 +18,13 @@ function saveToStorage() {
   localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
   localStorage.setItem('approvedPurchases', JSON.stringify(approvedPurchases));
   localStorage.setItem('approvedWithdrawals', JSON.stringify(approvedWithdrawals));
+}
+
+function switchAuth(tab) {
+  document.getElementById('loginTab').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('registerTab').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
 }
 
 function registerUser() {
