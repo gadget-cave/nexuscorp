@@ -1,3 +1,4 @@
+/* This is your optimized and complete style.css file */
 :root {
   --primary: #2563eb;
   --primary-dark: #1d4ed8;
@@ -444,3 +445,4 @@ footer .copyright {
     gap: 20px;
   }
 }
+
