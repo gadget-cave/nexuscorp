@@ -1,286 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NexusCorp - Login/Register</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusCorp - Login/Register</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <nav>
-        <a href="#" class="logo">NexusCorp</a>
-        <div class="nav-links">
-          <a href="#">Login</a>
-          <a href="#">Register</a>
-          <a href="#">Help</a>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">NexusCorp</a>
+                <div class="nav-links">
+                    <a href="#">Login</a>
+                    <a href="#">Register</a>
+                    <a href="#">Help</a>
+                </div>
+                <a href="#" class="cta-button">Get Started</a>
+            </nav>
         </div>
-        <a href="#" class="cta-button">Get Started</a>
-      </nav>
-    </div>
-  </header>
+    </header>
 
-  <section class="hero">
-    <div class="container">
-      <div class="auth-container">
-        <div class="auth-tabs">
-          <button class="auth-tab active" onclick="switchTab('login')">Login</button>
-          <button class="auth-tab" onclick="switchTab('register')">Register</button>
-        </div>
+    <section class="hero">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+                    <button class="auth-tab" onclick="switchTab('register')">Register</button>
+                </div>
 
-        <form id="login-form" class="auth-form">
-          <h2>Login to Your Account</h2>
-          <div class="form-group">
-            <input type="tel" placeholder="Mobile Number" required />
-          </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" required />
-          </div>
-          <button type="submit" class="cta-button">Login</button>
-        </form>
+                <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+                    <h2>Login to Your Account</h2>
+                    <div class="form-group">
+                        <input type="tel" id="login-mobile" placeholder="Mobile Number" pattern="[6-9]\d{9}" title="Please enter a valid 10-digit Indian mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="login-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="cta-button">Login</button>
+                </form>
 
-        <form id="register-form" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
-          <h2>Create New Account</h2>
-          <div class="form-group">
-            <input type="tel" id="mobile-number" placeholder="Mobile Number" required />
-          </div>
-          <div class="form-group">
-            <input type="password" id="password" placeholder="Create Password" required />
-          </div>
-          <div class="form-group">
-            <input type="password" id="confirm-password" placeholder="Confirm Password" required />
-          </div>
-          <div class="form-group">
-            <input type="text" id="referral-id" placeholder="Referral ID (Optional)" />
-          </div>
-          <button type="submit" class="cta-button">Register</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section class="plans-section" style="display:none;">
-    <div class="container">
-      <div class="section-title">
-        <h2>Investment Plans</h2>
-        <p>Choose a plan that suits your investment goals</p>
-      </div>
-
-      <div class="plans-grid">
-        <!-- Repeat plan-card for each plan -->
-        <div class="plan-card">
-          <div class="plan-header">
-            <h3>Starter Plan</h3>
-            <div class="plan-price">₹500</div>
-          </div>
-          <ul class="plan-features">
-            <li>Daily: ₹50</li>
-            <li>Duration: 20 days</li>
-            <li>Total Return: ₹1000</li>
-          </ul>
-          <button class="cta-button plan-button" onclick="selectPlan(500)">Buy Now</button>
-        </div>
-
-        <div class="plan-card">
-          <div class="plan-header">
-            <h3>Silver Plan</h3>
-            <div class="plan-price">₹1000</div>
-          </div>
-          <ul class="plan-features">
-            <li>Daily: ₹100</li>
-            <li>Duration: 20 days</li>
-            <li>Total Return: ₹2000</li>
-          </ul>
-          <button class="cta-button plan-button" onclick="selectPlan(1000)">Buy Now</button>
-        </div>
-
-        <div class="plan-card">
-          <div class="plan-header">
-            <h3>Gold Plan</h3>
-            <div class="plan-price">₹2000</div>
-          </div>
-          <ul class="plan-features">
-            <li>Daily: ₹200</li>
-            <li>Duration: 20 days</li>
-            <li>Total Return: ₹4000</li>
-          </ul>
-          <button class="cta-button plan-button" onclick="selectPlan(2000)">Buy Now</button>
-        </div>
-
-        <div class="plan-card">
-          <div class="plan-header">
-            <h3>Platinum Plan</h3>
-            <div class="plan-price">₹5000</div>
-          </div>
-          <ul class="plan-features">
-            <li>Daily: ₹500</li>
-            <li>Duration: 20 days</li>
-            <li>Total Return: ₹10000</li>
-          </ul>
-          <button class="cta-button plan-button" onclick="selectPlan(5000)">Buy Now</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="payment-section" style="display:none;">
-    <div class="container">
-      <div class="payment-container">
-        <h2>Complete Your Payment</h2>
-        <div id="selected-plan-info"></div>
-        <div class="payment-options">
-          <button class="payment-option active">UPI</button>
-          <button class="payment-option">Bank Transfer</button>
-          <button class="payment-option">Paytm</button>
-        </div>
-        <div class="payment-details">
-          <div class="upi-qr">
-            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bb34d0d3-529e-4e5a-98b3-3afa88e56764.png" alt="UPI QR Code for payment" />
-          </div>
-          <div class="payment-instructions">
-            <p>Please complete the payment to activate your plan.</p>
-            <p>Payment ID: <span class="payment-id">NXSP123456</span></p>
-            <button class="cta-button confirm-payment">I have made the payment</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="features">
-    <div class="container">
-      <div class="section-title">
-        <h2>Our Services</h2>
-        <p>Comprehensive solutions tailored to your business needs</p>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">💡</div>
-          <h3>Digital Strategy</h3>
-          <p>Strategic planning for your online presence and digital transformation journey.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🛠️</div>
-          <h3>Web Development</h3>
-          <p>Custom websites and web applications built with cutting-edge technologies.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📈</div>
-          <h3>Growth Marketing</h3>
-          <p>Data-driven marketing strategies to accelerate your business growth.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="testimonials">
-    <div class="container">
-      <div class="section-title">
-        <h2>What Our Clients Say</h2>
-        <p>Trusted by businesses worldwide</p>
-      </div>
-      <div class="testimonial-grid">
-        <!-- Testimonial 1 -->
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            "Working with NexusCorp transformed our online presence. Their team delivered exceptional results beyond our expectations."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-img">
-              <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d0a9ec2f-e737-4c00-b10a-00d2dd67bec5.png" />
+                <form id="register-form" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
+                    <h2>Create New Account</h2>
+                    <div class="form-group">
+                        <input type="tel" id="mobile-number" placeholder="Mobile Number" pattern="[6-9]\d{9}" title="Please enter a valid 10-digit Indian mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Create Password (min 6 characters)" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="referral-id" placeholder="Referral ID (Optional)">
+                    </div>
+                    <button type="submit" class="cta-button">Register</button>
+                </form>
             </div>
-            <div class="author-info">
-              <h4>Sarah Johnson</h4>
-              <p>Marketing Director, TechSolutions</p>
+        </div>
+    </section>
+
+    <section class="plans-section" style="display:none;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Investment Plans</h2>
+                <p>Choose a plan that suits your investment goals</p>
             </div>
-          </div>
-        </div>
-
-        <!-- Testimonial 2 -->
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            "The digital strategy NexusCorp developed helped us increase our revenue by 150% in just six months."
-          </div>
-          <div class="testimonial-author">
-            <div class="author-img">
-              <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ac5c2692-0350-43a7-a891-66069af4fc9c.png" />
+            <div class="investment-image">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/30a3a22d-3044-49cf-bbbc-8fb5b30e5546.png" alt="Investment opportunities with great returns">
             </div>
-            <div class="author-info">
-              <h4>Michael Chen</h4>
-              <p>CEO, InnovateCorp</p>
+            <div class="plans-grid">
+                <!-- Plan cards go here -->
             </div>
-          </div>
         </div>
+    </section>
 
-        <!-- Testimonial 3 -->
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            "Reliable, professional, and truly cares about their clients' success. Highly recommended!"
-          </div>
-          <div class="testimonial-author">
-            <div class="author-img">
-              <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f754c367-3fc4-4ed0-bcf3-cca1540a2a41.png" />
+    <section class="payment-section" style="display:none;">
+        <div class="container">
+            <div class="payment-container">
+                <h2>Complete Your Payment</h2>
+                <div id="selected-plan-info"></div>
+                <div class="payment-options">
+                    <button class="payment-option active">Recommended: UPI</button>
+                    <button class="payment-option">Bank Transfer</button>
+                    <button class="payment-option">Other Methods</button>
+                </div>
+                <div class="payment-details">
+                    <div class="upi-qr">
+                        <h3>Direct UPI Payment</h3>
+                        <p>Click below button to pay directly to:</p>
+                        <p><strong>xixam.hishamm@fam</strong></p>
+                        <button class="cta-button" onclick="startUPIPayment()">Pay with UPI</button>
+                    </div>
+                    <div class="payment-instructions">
+                        <p>Click "Pay with UPI" to open your payment app with the exact amount.</p>
+                        <p>Complete payment to: <strong>xixam.hishamm@fam</strong></p>
+                        <p>Payment ID: <span class="payment-id">NXSP123456</span></p>
+                        <p>After successful payment, click confirmation below</p>
+                        <button class="cta-button confirm-payment">I have made the payment</button>
+                    </div>
+                </div>
             </div>
-            <div class="author-info">
-              <h4>Emma Rodriguez</h4>
-              <p>Founder, GreenScape</p>
+        </div>
+    </section>
+
+    <section class="admin-section" style="display:none;">
+        <div class="container">
+            <h2>Payment Records</h2>
+            <div class="payment-records">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mobile Number</th>
+                            <th>UPI ID</th>
+                            <th>UTR Number</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payment-records-body"></tbody>
+                </table>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-column">
-          <h3>Company</h3>
-          <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Press</a></li>
-            <li><a href="#">Blog</a></li>
-          </ul>
+    <section class="features">
+        <!-- Services listed here -->
+    </section>
+
+    <section class="testimonials">
+        <!-- Testimonials listed here -->
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Footer links -->
+            </div>
+            <div class="copyright">
+                © 2023 NexusCorp. All rights reserved.
+            </div>
         </div>
+    </footer>
 
-        <div class="footer-column">
-          <h3>Services</h3>
-          <ul>
-            <li><a href="#">Digital Strategy</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Mobile Apps</a></li>
-            <li><a href="#">Cloud Solutions</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-column">
-          <h3>Support</h3>
-          <ul>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Help Center</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-column">
-          <h3>Connect With Us</h3>
-          <ul>
-            <li><a href="#">LinkedIn</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Instagram</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="copyright">
-        © 2023 NexusCorp. All rights reserved.
-      </div>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
+
