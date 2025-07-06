@@ -22,19 +22,25 @@ function registerUser() {
   const pass = document.getElementById("regPass").value;
   const confirmPass = document.getElementById("regConfirmPass").value;
   const otp = document.getElementById("regOTP").value;
-  if (pass !== confirmPass || otp !== "1234") return alert("Invalid input or OTP");
+
+  if (pass !== confirmPass) return alert("Passwords do not match");
+  if (otp !== "1234") return alert("Invalid OTP (use 1234)");
   if (users.find(u => u.mobile === mobile)) return alert("User already exists");
+
   users.push({ name, mobile, pass, daily: 0, commission: 0, plan: null, accepted: false });
   saveToStorage();
-  alert("Registered successfully");
+  alert("Registration successful!");
 }
 
 function loginUser() {
   const mobile = document.getElementById("loginMobile").value;
   const pass = document.getElementById("loginPass").value;
+
   if (mobile === admin.mobile && pass === admin.password) return showAdmin();
+
   const user = users.find(u => u.mobile === mobile && u.pass === pass);
   if (!user) return alert("Login failed");
+
   currentUser = user;
   document.getElementById("authSection").style.display = "none";
   document.getElementById("dashboard").style.display = "block";
@@ -118,10 +124,12 @@ function showAdmin() {
   const wTable = document.getElementById("withdrawTable").querySelector("tbody");
   pTable.innerHTML = "";
   wTable.innerHTML = "";
+
   purchases.forEach((p, i) => {
     const row = pTable.insertRow();
     row.innerHTML = `<td>${p.name}</td><td>${p.mobile}</td><td>${p.amount}</td><td>${p.upi}</td><td>${p.utr}</td><td><button onclick='acceptPlan(${i})'>Accept</button></td>`;
   });
+
   withdraws.forEach((w, i) => {
     const row = wTable.insertRow();
     row.innerHTML = `<td>${w.mobile}</td><td>${w.amount}</td><td><button onclick='approveWithdraw(${i})'>Approve</button></td>`;
