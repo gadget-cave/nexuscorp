@@ -14,58 +14,70 @@
         <div class="nav-links">
           <a href="#login-section">Login</a>
           <a href="#register-section">Register</a>
-          <a href="#help">Help</a>
         </div>
-        <button class="cta">Get Started</button>
+        <a href="#" class="cta-button">Get Started</a>
       </nav>
     </div>
   </header>
 
-  <!-- Login/Register Section -->
+  <!-- Hero Section (Login/Register) -->
   <section class="hero" id="login-section">
-    <div class="auth-toggle">
-      <button id="login-tab" class="active">Login</button>
-      <button id="register-tab">Register</button>
-    </div>
-    <div class="auth-forms">
+    <div class="auth-box">
+      <div class="auth-toggle">
+        <button id="login-tab" class="active">Login</button>
+        <button id="register-tab">Register</button>
+      </div>
+
+      <!-- Login Form -->
       <form id="login-form" class="auth-form">
-        <input type="text" id="login-mobile" placeholder="Mobile Number" required />
+        <input type="tel" id="login-mobile" placeholder="Mobile Number" required />
         <input type="password" id="login-password" placeholder="Password" required />
-        <button onclick="handleLogin(event)">Login</button>
+        <button type="submit" class="cta-button">Login</button>
       </form>
 
-      <form id="register-form" class="auth-form hidden">
-        <input type="text" id="reg-mobile" placeholder="Mobile Number" required />
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form" style="display: none">
+        <input type="tel" id="reg-mobile" placeholder="Mobile Number" required />
         <input type="password" id="reg-password" placeholder="Password" required />
-        <input type="password" id="reg-confirm" placeholder="Confirm Password" required />
-        <button onclick="sendOTP(event)">Send OTP</button>
-        <input type="text" id="otp-code" placeholder="Enter OTP" class="hidden" />
-        <button id="verify-otp-btn" class="hidden" onclick="verifyOTP(event)">Verify OTP & Register</button>
+        <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required />
+        <input type="text" id="reg-otp" placeholder="Enter OTP" required />
+        <button type="submit" class="cta-button">Register</button>
       </form>
     </div>
   </section>
 
-  <!-- Investment Plans -->
-  <section class="plans-section hidden">
-    <h2>Investment Plans</h2>
-    <div id="plans-container"></div>
+  <!-- Plans Section -->
+  <section class="plans-section" style="display: none">
+    <div class="container">
+      <h2>Investment Plans</h2>
+      <div class="plans-grid" id="plans-container">
+        <!-- Dynamic plans will load here -->
+      </div>
+    </div>
   </section>
 
   <!-- Payment Section -->
-  <section class="payment-section hidden">
-    <div class="payment-box">
-      <h2>Complete Payment</h2>
+  <section class="payment-section" style="display: none">
+    <div class="container">
+      <h2>Payment Method</h2>
       <div id="selected-plan-info"></div>
-      <p>Pay to: <strong>xixam.hishamm@fam</strong></p>
-      <button onclick="startUPIPayment()">Pay with UPI</button>
-      <input type="text" id="user-upi" placeholder="Your UPI ID" />
-      <input type="text" id="user-utr" placeholder="UTR/Txn ID" />
-      <button onclick="submitPaymentDetails()">Submit Payment Details</button>
+      <div class="payment-details">
+        <p>Pay to: <strong>xixam.hishamm@fam</strong></p>
+        <p>Amount: ₹<span id="pay-amount">0</span></p>
+        <button onclick="simulateUPIPayment()" class="cta-button">Pay with UPI</button>
+      </div>
+
+      <div class="payment-confirm">
+        <h3>Enter UPI & UTR</h3>
+        <input type="text" id="user-upi" placeholder="Your UPI ID" required />
+        <input type="text" id="user-utr" placeholder="UTR/Txn ID" required />
+        <button class="cta-button" onclick="submitPaymentDetails()">Submit Payment Details</button>
+      </div>
     </div>
   </section>
 
   <!-- Admin Section -->
-  <section class="admin-section hidden">
+  <section class="admin-section" style="display: none">
     <div class="container">
       <h2>Payment Requests</h2>
       <table>
@@ -80,7 +92,7 @@
           </tr>
         </thead>
         <tbody id="admin-payment-body">
-          <!-- Payments injected dynamically -->
+          <!-- Payments will be injected dynamically -->
         </tbody>
       </table>
     </div>
@@ -89,4 +101,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
