@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Investment Portal</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
 </head>
 <body>
   <div id="app">
-    <!-- Login/Register Section -->
+    <!-- Login/Register -->
     <div id="authSection" class="auth-flex">
       <div id="registerBox">
         <h2>Register</h2>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <!-- Dashboard -->
+    <!-- User Dashboard -->
     <div id="dashboard" style="display:none">
       <nav>
         <button onclick="showPage('home')">Home</button>
@@ -37,12 +37,12 @@
       </nav>
 
       <div id="homePage">
-        <h2>Investment Plans</h2>
-        <div class="plans-container" id="plansContainer"></div>
+        <h2>Available Plans</h2>
+        <div id="plansContainer" class="plans-container"></div>
       </div>
 
       <div id="accountPage" style="display:none">
-        <h2>Your Account</h2>
+        <h2>My Account</h2>
         <p>Daily Return: ₹<span id="dailyReturn">0</span></p>
         <p>Commission: ₹<span id="commission">0</span></p>
         <button onclick="requestWithdraw()">Withdraw</button>
@@ -52,15 +52,17 @@
     <!-- Admin Panel -->
     <div id="adminPanel" style="display:none">
       <h2>Admin Dashboard</h2>
+
       <div>
-        <h3>Pending Purchases</h3>
+        <h3>Pending Plan Requests</h3>
         <table id="purchaseTable">
           <thead>
-            <tr><th>Name</th><th>Mobile</th><th>Amount</th><th>UPI</th><th>UTR</th><th>Action</th></tr>
+            <tr><th>Name</th><th>Mobile</th><th>Amount</th><th>UPI ID</th><th>UTR</th><th>Action</th></tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
+
       <div>
         <h3>Withdraw Requests</h3>
         <table id="withdrawTable">
