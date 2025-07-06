@@ -1,236 +1,207 @@
+/* ========== Variables ========== */
 :root {
   --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --secondary: #7c3aed;
-  --light: #f8fafc;
   --dark: #1e293b;
   --gray: #64748b;
-  --accepted: #ffd700;
+  --light: #f8fafc;
+  --success: #10b981;
+  --danger: #ef4444;
 }
 
+/* ========== Reset & Base ========== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
-
 body {
-  background-color: #ffffff;
+  background: var(--light);
   color: var(--dark);
   line-height: 1.6;
 }
-
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Header */
+/* ========== Header ========== */
 header {
-  background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding: 15px 30px;
   position: sticky;
   top: 0;
   z-index: 100;
 }
-
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
 }
-
 .logo {
   font-size: 24px;
   font-weight: bold;
   color: var(--primary);
-  text-decoration: none;
 }
-
-.nav-links {
-  display: flex;
-  gap: 30px;
-}
-
 .nav-links a {
-  text-decoration: none;
-  color: var(--dark);
+  margin: 0 15px;
   font-weight: 500;
 }
-
 .cta-button {
-  background-color: var(--primary);
+  background: var(--primary);
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background-color 0.3s;
   border: none;
   cursor: pointer;
+  transition: background 0.3s;
 }
-
 .cta-button:hover {
-  background-color: var(--primary-dark);
+  background: #1d4ed8;
 }
 
-/* Tabs */
+/* ========== Hero ========== */
+.hero {
+  background: var(--primary);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+/* ========== Forms (Login/Register) ========== */
 .auth-container {
-  max-width: 400px;
-  margin: auto;
   background: white;
   padding: 30px;
+  max-width: 500px;
+  margin: 40px auto;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-
 .auth-tabs {
   display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
-
 .auth-tab {
   flex: 1;
-  padding: 10px;
-  background: none;
-  border: none;
-  border-bottom: 2px solid #ddd;
-  font-size: 16px;
+  text-align: center;
+  padding: 12px;
+  border-bottom: 2px solid #e2e8f0;
   cursor: pointer;
 }
-
 .auth-tab.active {
-  border-bottom-color: var(--primary);
+  border-color: var(--primary);
   font-weight: bold;
   color: var(--primary);
 }
-
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-
 .auth-form input {
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #cbd5e1;
   border-radius: 5px;
 }
 
-.plan-image img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
+/* ========== Plan Cards ========== */
+.plans-section {
+  padding: 60px 0;
 }
-
 .plans-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 25px;
+  padding: 20px;
 }
-
 .plan-card {
   background: white;
-  padding: 20px;
   border-radius: 10px;
+  padding: 20px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  text-align: center;
   transition: transform 0.3s;
 }
-
-.plan-card.accepted {
-  background: var(--accepted);
-}
-
 .plan-card:hover {
   transform: translateY(-5px);
 }
-
-.plan-header {
-  text-align: center;
-  margin-bottom: 10px;
+.plan-image img {
+  width: 60%;
+  height: auto;
+  margin: 10px 0;
 }
-
 .plan-price {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: var(--primary);
 }
-
 .plan-features {
   list-style: none;
+  margin: 15px 0;
   padding: 0;
-  margin: 10px 0;
+  color: var(--gray);
 }
-
 .plan-features li {
-  border-bottom: 1px solid #eee;
-  padding: 8px 0;
+  margin-bottom: 6px;
+}
+.plan-card.gold {
+  border: 2px solid gold;
+  background: #fffbea;
 }
 
-.payment-section,
-.utr-section,
-.admin-section {
-  margin-top: 40px;
-  background: #f8fafc;
-  padding: 30px;
+/* ========== Payment Section ========== */
+.payment-section {
+  background: white;
+  padding: 40px;
+  max-width: 700px;
+  margin: 40px auto;
   border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
-
-.payment-records table {
-  width: 100%;
-  border-collapse: collapse;
+.payment-options {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
 }
-
-.payment-records th,
-.payment-records td {
-  border: 1px solid #ccc;
+.payment-option {
+  flex: 1;
   padding: 10px;
-  text-align: left;
+  background: #f1f5f9;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
 }
-
-.payment-records th {
+.payment-option.active {
   background: var(--primary);
   color: white;
 }
 
-.utr-form input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+/* ========== Admin Table ========== */
+.admin-section {
+  padding: 60px 20px;
 }
-
-.accept-btn {
-  background-color: green;
+.payment-records table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.payment-records th, .payment-records td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+.payment-records th {
+  background: var(--primary);
   color: white;
-  padding: 6px 12px;
+}
+.payment-records td button {
+  padding: 6px 10px;
   border: none;
+  background: var(--success);
+  color: white;
   border-radius: 4px;
   cursor: pointer;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .plans-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .payment-details {
-    flex-direction: column;
-  }
-}
