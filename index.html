@@ -9,18 +9,16 @@
 </head>
 <body>
   <div id="app">
-    <!-- Login/Register -->
+    <!-- Auth Section -->
     <div id="authSection" class="auth-flex">
-      <div id="registerBox">
+      <div class="auth-box">
         <h2>Register</h2>
         <input type="text" id="regName" placeholder="Name" />
         <input type="text" id="regMobile" placeholder="Mobile Number" />
         <input type="password" id="regPass" placeholder="Password" />
         <input type="password" id="regConfirmPass" placeholder="Confirm Password" />
-        <input type="text" id="regOTP" placeholder="Enter OTP (1234)" />
         <button onclick="registerUser()">Register</button>
-      </div>
-      <div id="loginBox">
+        <hr>
         <h2>Login</h2>
         <input type="text" id="loginMobile" placeholder="Mobile Number" />
         <input type="password" id="loginPass" placeholder="Password" />
@@ -54,7 +52,7 @@
       <h2>Admin Dashboard</h2>
 
       <div>
-        <h3>Pending Plan Requests</h3>
+        <h3>Plan Requests</h3>
         <table id="purchaseTable">
           <thead>
             <tr><th>Name</th><th>Mobile</th><th>Amount</th><th>UPI ID</th><th>UTR</th><th>Action</th></tr>
