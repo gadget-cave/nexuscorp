@@ -1,5 +1,3 @@
-// script.js
-
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let currentUser = null;
 let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
@@ -27,9 +25,17 @@ function registerUser() {
   if (otp !== "1234") return alert("Invalid OTP (use 1234)");
   if (users.find(u => u.mobile === mobile)) return alert("User already exists");
 
-  users.push({ name, mobile, pass, daily: 0, commission: 0, plan: null, accepted: false });
+  const newUser = { name, mobile, pass, daily: 0, commission: 0, plan: null, accepted: false };
+  users.push(newUser);
   saveToStorage();
-  alert("Registration successful!");
+
+  alert("Registration successful! Logging you in...");
+
+  currentUser = newUser;
+  document.getElementById("authSection").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+  loadPlans();
+  updateAccount();
 }
 
 function loginUser() {
@@ -52,7 +58,7 @@ function logoutUser() {
   currentUser = null;
   document.getElementById("dashboard").style.display = "none";
   document.getElementById("adminPanel").style.display = "none";
-  document.getElementById("authSection").style.display = "block";
+  document.getElementById("authSection").style.display = "flex";
 }
 
 function showPage(page) {
