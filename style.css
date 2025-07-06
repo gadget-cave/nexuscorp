@@ -4,7 +4,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f2f2f2;
+  background: #f7f7f7;
 }
 
 #app {
@@ -15,6 +15,7 @@ body {
 
 h2, h3 {
   color: #333;
+  margin-bottom: 10px;
 }
 
 input, button {
@@ -22,19 +23,20 @@ input, button {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 button {
-  background: #007bff;
-  color: white;
+  background-color: #007bff;
+  color: #fff;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background: #0056b3;
+  background-color: #0056b3;
 }
 
 nav {
@@ -43,25 +45,41 @@ nav {
   margin-bottom: 20px;
 }
 
+.auth-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 30px;
+}
+
+#registerBox, #loginBox {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 48%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
 .plans-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .plan-box {
-  background: white;
-  padding: 10px;
-  border: 1px solid #ddd;
+  background: #fff;
+  padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   text-align: center;
+  transition: 0.3s;
+  border: 2px solid #ddd;
 }
 
 .plan-box img {
   width: 100px;
   height: 100px;
-  object-fit: contain;
   margin-bottom: 10px;
 }
 
@@ -73,34 +91,27 @@ nav {
 #purchaseTable, #withdrawTable {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 20px;
+  background: #fff;
 }
 
-#purchaseTable th, #withdrawTable th, #purchaseTable td, #withdrawTable td {
+#purchaseTable th, #withdrawTable th,
+#purchaseTable td, #withdrawTable td {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 10px;
   text-align: center;
-  background: white;
 }
 
-#registerBox, #loginBox {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  width: 100%;
-}
-
-.auth-flex {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-@media (max-width: 700px) {
+@media screen and (max-width: 768px) {
   .auth-flex {
+    flex-direction: column;
+  }
+
+  #registerBox, #loginBox {
+    width: 100%;
+  }
+
+  nav {
     flex-direction: column;
   }
 
