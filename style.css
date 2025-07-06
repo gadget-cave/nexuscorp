@@ -5,6 +5,7 @@
   --light: #f8fafc;
   --dark: #1e293b;
   --gray: #64748b;
+  --accepted: #ffd700;
 }
 
 * {
@@ -21,13 +22,12 @@ body {
 }
 
 .container {
-  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  margin: auto;
+  padding: 20px;
 }
 
-/* Navigation */
+/* Header */
 header {
   background-color: white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -40,12 +40,12 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 20px;
 }
 
 .logo {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: bold;
   color: var(--primary);
   text-decoration: none;
 }
@@ -59,11 +59,6 @@ nav {
   text-decoration: none;
   color: var(--dark);
   font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
-  color: var(--primary);
 }
 
 .cta-button {
@@ -74,6 +69,7 @@ nav {
   text-decoration: none;
   font-weight: 500;
   transition: background-color 0.3s;
+  border: none;
   cursor: pointer;
 }
 
@@ -81,44 +77,24 @@ nav {
   background-color: var(--primary-dark);
 }
 
-/* Hero Section */
-.hero {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  padding: 80px 0;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 48px;
-  margin-bottom: 20px;
-  color: var(--dark);
-}
-
-.hero p {
-  font-size: 20px;
-  color: var(--gray);
-  max-width: 700px;
-  margin: 0 auto 30px;
-}
-
-/* Auth Container */
+/* Tabs */
 .auth-container {
-  max-width: 500px;
-  margin: 0 auto;
+  max-width: 400px;
+  margin: auto;
   background: white;
-  padding: 40px;
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .auth-tabs {
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .auth-tab {
   flex: 1;
-  padding: 15px;
+  padding: 10px;
   background: none;
   border: none;
   border-bottom: 2px solid #ddd;
@@ -128,42 +104,45 @@ nav {
 
 .auth-tab.active {
   border-bottom-color: var(--primary);
-  color: var(--primary);
   font-weight: bold;
+  color: var(--primary);
 }
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 15px;
+.auth-form input {
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
 }
 
-/* Plans Section */
-.plans-section {
-  padding: 60px 0;
+.plan-image img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .plans-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 50px;
+  gap: 20px;
 }
 
 .plan-card {
   background: white;
+  padding: 20px;
   border-radius: 10px;
-  padding: 30px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   transition: transform 0.3s;
+}
+
+.plan-card.accepted {
+  background: var(--accepted);
 }
 
 .plan-card:hover {
@@ -172,98 +151,33 @@ nav {
 
 .plan-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .plan-price {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
   color: var(--primary);
-  margin-top: 10px;
-}
-
-.plan-image {
-  margin: 10px 0;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.plan-image img {
-  width: 100%;
-  height: 150px;
-  object-fit: contain;
-  display: block;
 }
 
 .plan-features {
   list-style: none;
   padding: 0;
+  margin: 10px 0;
 }
 
 .plan-features li {
-  padding: 8px 0;
   border-bottom: 1px solid #eee;
+  padding: 8px 0;
 }
 
-.plan-button {
-  width: 100%;
-  margin-top: 20px;
-}
-
-/* Payment Section */
-.payment-section {
-  padding: 60px 0;
-}
-
-.payment-container {
-  max-width: 600px;
-  margin: 0 auto;
-  background: white;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.payment-options {
-  display: flex;
-  gap: 15px;
-  margin: 20px 0;
-}
-
-.payment-option {
-  flex: 1;
-  padding: 10px;
-  background: #f1f5f9;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.payment-option.active {
-  background: var(--primary);
-  color: white;
-}
-
-.payment-details {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.payment-details input {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-/* Admin Section */
+.payment-section,
+.utr-section,
 .admin-section {
-  padding: 60px 0;
-}
-
-.payment-records {
-  margin-top: 30px;
-  overflow-x: auto;
+  margin-top: 40px;
+  background: #f8fafc;
+  padding: 30px;
+  border-radius: 10px;
 }
 
 .payment-records table {
@@ -273,82 +187,47 @@ nav {
 
 .payment-records th,
 .payment-records td {
-  padding: 12px 15px;
+  border: 1px solid #ccc;
+  padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
 .payment-records th {
-  background-color: var(--primary);
+  background: var(--primary);
   color: white;
 }
 
-.payment-records tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.payment-records tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* Footer */
-footer {
-  background-color: var(--dark);
-  color: white;
-  padding: 60px 0 20px;
-}
-
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 40px;
-  margin-bottom: 40px;
-}
-
-.footer-column h3 {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: white;
-}
-
-.footer-column ul {
-  list-style: none;
-}
-
-.footer-column ul li {
+.utr-form input {
+  width: 100%;
+  padding: 12px;
   margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-.footer-column ul li a {
-  color: #cbd5e1;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-column ul li a:hover {
+.accept-btn {
+  background-color: green;
   color: white;
-}
-
-footer .copyright {
-  text-align: center;
-  padding-top: 20px;
-  border-top: 1px solid #334155;
-  color: #cbd5e1;
-  font-size: 14px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .nav-links {
-    display: none;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .hero h1 {
-    font-size: 36px;
-  }
-
-  .hero p {
-    font-size: 18px;
+  .plans-grid {
+    grid-template-columns: 1fr;
   }
 
   .payment-details {
