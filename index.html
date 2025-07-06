@@ -1,93 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusCorp - Login & Invest</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NexusCorp - Investment Platform</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav">
-            <a href="#" class="logo">NexusCorp</a>
-            <nav class="nav-links">
-                <a href="#" id="nav-login">Login</a>
-                <a href="#" id="nav-register">Register</a>
-                <a href="#" class="cta">Get Started</a>
-            </nav>
+  <!-- Header / Navbar -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">NexusCorp</a>
+        <div class="nav-links">
+          <a href="#" onclick="switchTab('login')">Login</a>
+          <a href="#" onclick="switchTab('register')">Register</a>
+          <a href="#">Help</a>
         </div>
-    </header>
+        <a href="#" class="cta-button">Get Started</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Auth Section -->
-    <section class="hero" id="auth-section">
-        <div class="container auth-container">
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchTab('login')">Login</button>
-                <button class="auth-tab" onclick="switchTab('register')">Register</button>
-            </div>
-
-            <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
-                <h2>Login</h2>
-                <input type="tel" id="login-mobile" placeholder="Mobile Number" required>
-                <input type="password" id="login-password" placeholder="Password" required>
-                <button type="submit" class="cta">Login</button>
-            </form>
-
-            <form id="register-form" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
-                <h2>Register</h2>
-                <input type="tel" id="register-mobile" placeholder="Mobile Number" required>
-                <input type="password" id="register-password" placeholder="Password" required>
-                <input type="password" id="register-confirm" placeholder="Confirm Password" required>
-                <input type="text" id="register-referral" placeholder="Referral ID (Optional)">
-                <button type="submit" class="cta">Register</button>
-            </form>
+  <!-- Login/Register Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="auth-container">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+          <button class="auth-tab" onclick="switchTab('register')">Register</button>
         </div>
-    </section>
 
-    <!-- Plans Section -->
-    <section class="plans-section" id="plans-section" style="display:none">
-        <div class="container">
-            <h2>Choose a Plan</h2>
-            <div class="plans-grid">
-                <!-- Plans dynamically inserted -->
-            </div>
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+          <h2>Login to Your Account</h2>
+          <div class="form-group">
+            <input type="tel" id="login-mobile" placeholder="Mobile Number" pattern="[6-9]\d{9}" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="login-password" placeholder="Password" required />
+          </div>
+          <button type="submit" class="cta-button">Login</button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
+          <h2>Create New Account</h2>
+          <div class="form-group">
+            <input type="tel" id="mobile-number" placeholder="Mobile Number" pattern="[6-9]\d{9}" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="password" placeholder="Create Password" minlength="6" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+          </div>
+          <div class="form-group">
+            <input type="text" id="referral-id" placeholder="Referral ID (Optional)" />
+          </div>
+          <button type="submit" class="cta-button">Register</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans Section -->
+  <section class="plans-section" style="display:none;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Investment Plans</h2>
+        <p>Choose a plan that suits your investment goals</p>
+      </div>
+      <div class="investment-image">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/30a3a22d-3044-49cf-bbbc-8fb5b30e5546.png" alt="Investment Banner"/>
+      </div>
+
+      <div class="plans-grid">
+        <!-- Starter Plan -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <h3>Starter Plan</h3>
+            <div class="plan-price">₹500</div>
+          </div>
+          <div class="plan-image">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3e31e7a5-91dd-4e40-8720-5e5c1d5b897d.png" />
+          </div>
+          <ul class="plan-features">
+            <li>Daily: ₹50</li>
+            <li>Duration: 20 days</li>
+            <li>Total Return: ₹1000</li>
+          </ul>
+          <button class="cta-button plan-button" onclick="selectPlan(500)">Buy Now</button>
         </div>
-    </section>
 
-    <!-- Payment Section -->
-    <section class="payment-section" id="payment-section" style="display:none">
-        <div class="container">
-            <h2>Complete Payment</h2>
-            <div id="selected-plan-info"></div>
-            <div class="payment-instructions">
-                <p>Pay to: <strong>xixam.hishamm@fam</strong></p>
-                <button class="cta" onclick="startUPIPayment()">Pay with UPI</button>
-                <button class="cta confirm-payment">I have paid</button>
-            </div>
+        <!-- Silver Plan -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <h3>Silver Plan</h3>
+            <div class="plan-price">₹1000</div>
+          </div>
+          <div class="plan-image">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5b376f2b-4f9c-4695-b794-440ba0b1b28a.png" />
+          </div>
+          <ul class="plan-features">
+            <li>Daily: ₹100</li>
+            <li>Duration: 20 days</li>
+            <li>Total Return: ₹2000</li>
+          </ul>
+          <button class="cta-button plan-button" onclick="selectPlan(1000)">Buy Now</button>
         </div>
-    </section>
 
-    <!-- Admin Section -->
-    <section class="admin-section" id="admin-section" style="display:none">
-        <div class="container">
-            <h2>Admin - Payment Records</h2>
-            <table>
-                <thead>
-                    <tr><th>Mobile</th><th>UPI ID</th><th>UTR</th><th>Amount</th><th>Status</th></tr>
-                </thead>
-                <tbody id="payment-records-body"></tbody>
-            </table>
+        <!-- Gold Plan -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <h3>Gold Plan</h3>
+            <div class="plan-price">₹2000</div>
+          </div>
+          <div class="plan-image">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/246e4acd-7564-4a71-9e05-bf9736e5f09a.png" />
+          </div>
+          <ul class="plan-features">
+            <li>Daily: ₹200</li>
+            <li>Duration: 20 days</li>
+            <li>Total Return: ₹4000</li>
+          </ul>
+          <button class="cta-button plan-button" onclick="selectPlan(2000)">Buy Now</button>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 NexusCorp. All rights reserved.</p>
+        <!-- Platinum Plan -->
+        <div class="plan-card">
+          <div class="plan-header">
+            <h3>Platinum Plan</h3>
+            <div class="plan-price">₹5000</div>
+          </div>
+          <div class="plan-image">
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/36db592a-5d1a-4a06-a90a-22d05f99b38e.png" />
+          </div>
+          <ul class="plan-features">
+            <li>Daily: ₹500</li>
+            <li>Duration: 20 days</li>
+            <li>Total Return: ₹10000</li>
+          </ul>
+          <button class="cta-button plan-button" onclick="selectPlan(5000)">Buy Now</button>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script src="script.js"></script>
+  <!-- Payment Section -->
+  <section class="payment-section" style="display:none;">
+    <div class="container">
+      <div class="payment-container">
+        <h2>Complete Your Payment</h2>
+        <div id="selected-plan-info"></div>
+        <div class="payment-options">
+          <button class="payment-option active">UPI</button>
+          <button class="payment-option">Bank</button>
+          <button class="payment-option">Other</button>
+        </div>
+        <div class="payment-details">
+          <div class="upi-qr">
+            <h3>UPI Payment</h3>
+            <p>Pay to: <strong>xixam.hishamm@fam</strong></p>
+            <button class="cta-button" onclick="startUPIPayment()">Pay with UPI</button>
+          </div>
+          <div class="payment-instructions">
+            <p>Click "Pay with UPI" to open your UPI app.</p>
+            <p>After payment, click below:</p>
+            <button class="cta-button confirm-payment">I have made the payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin Section -->
+  <section class="admin-section" style="display:none;">
+    <div class="container">
+      <h2>Payment Records</h2>
+      <div class="payment-records">
+        <table>
+          <thead>
+            <tr>
+              <th>Mobile</th>
+              <th>UPI ID</th>
+              <th>UTR Number</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="payment-records-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Strategy</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">X</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2025 NexusCorp. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- External JS -->
+  <script src="script.js"></script>
 </body>
 </html>
