@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NexusCorp</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusCorp - Investment Platform</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -16,6 +16,7 @@
           <a href="#" onclick="switchTab('register')">Register</a>
           <a href="#">Help</a>
         </div>
+        <a href="#" class="cta-button">Get Started</a>
       </nav>
     </div>
   </header>
@@ -28,84 +29,84 @@
           <button class="auth-tab" onclick="switchTab('register')">Register</button>
         </div>
 
-        <!-- Login Form -->
         <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
           <h2>Login</h2>
-          <input type="tel" id="login-mobile" placeholder="Mobile Number" pattern="[6-9]\d{9}" required />
-          <input type="password" id="login-password" placeholder="Password" required />
+          <div class="form-group">
+            <input type="tel" id="login-mobile" placeholder="Mobile Number" pattern="[6-9]\d{9}" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="login-password" placeholder="Password" required>
+          </div>
           <button type="submit" class="cta-button">Login</button>
         </form>
 
-        <!-- Register Form -->
         <form id="register-form" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
           <h2>Register</h2>
-          <input type="tel" id="register-mobile" placeholder="Mobile Number" pattern="[6-9]\d{9}" required />
-          <input type="password" id="register-password" placeholder="Create Password" minlength="6" required />
-          <input type="password" id="register-confirm" placeholder="Confirm Password" required />
-          <input type="text" id="referral-id" placeholder="Referral ID (optional)" />
-          <button type="button" class="cta-button" onclick="sendOTP()">Send OTP</button>
-          <input type="text" id="register-otp" placeholder="Enter OTP" style="display:none;" />
-          <button type="submit" class="cta-button" style="display:none;" id="register-final-btn">Confirm & Register</button>
+          <div class="form-group">
+            <input type="tel" id="reg-mobile" placeholder="Mobile Number" pattern="[6-9]\d{9}" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="reg-password" placeholder="Password (min 6 chars)" minlength="6" required>
+          </div>
+          <div class="form-group">
+            <input type="text" id="otp-field" placeholder="Enter OTP" style="display:none;">
+          </div>
+          <button type="submit" class="cta-button">Register</button>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- Plans Section -->
   <section class="plans-section" style="display:none;">
     <div class="container">
-      <h2>Investment Plans</h2>
+      <div class="section-title">
+        <h2>Investment Plans</h2>
+        <p>Select a plan that suits your goals</p>
+      </div>
       <div class="plans-grid" id="plans-container">
-        <!-- Plan cards will be injected by JS -->
+        <!-- Plans added dynamically -->
       </div>
     </div>
   </section>
 
-  <!-- Payment Section -->
   <section class="payment-section" style="display:none;">
     <div class="container">
-      <h2>Complete Payment</h2>
-      <div id="selected-plan-info"></div>
-      <div class="payment-options">
-        <button class="payment-option active">UPI</button>
-      </div>
-      <div class="payment-details">
-        <p>Pay to UPI ID: <strong>xixam.hishamm@fam</strong></p>
-        <button onclick="startUPIPayment()" class="cta-button">Pay with UPI</button>
-      </div>
-      <div class="payment-confirmation">
-        <input type="text" id="upi-id" placeholder="Your UPI ID" required />
-        <input type="text" id="utr-id" placeholder="Enter UTR Number" required />
-        <button onclick="confirmPayment()" class="cta-button">I have made the payment</button>
+      <div class="payment-container">
+        <h2>Complete Payment</h2>
+        <div id="selected-plan-info"></div>
+        <div class="payment-instructions">
+          <p>Send exact amount to: <strong>xixam.hishamm@fam</strong></p>
+          <button onclick="startUPIPayment()" class="cta-button">Pay Now</button>
+          <button onclick="showUPIForm()" class="cta-button confirm-payment">I have made the payment</button>
+        </div>
+        <div id="upi-form" style="display:none">
+          <input type="text" id="upi-id" placeholder="Enter your UPI ID" required>
+          <input type="text" id="utr-id" placeholder="Enter UTR Number" required>
+          <button onclick="submitUTR()" class="cta-button">Submit Payment Info</button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Admin Section -->
   <section class="admin-section" style="display:none;">
     <div class="container">
-      <h2>Admin Panel - Payments</h2>
-      <div class="payment-records">
-        <table>
-          <thead>
-            <tr>
-              <th>Mobile</th>
-              <th>UPI ID</th>
-              <th>UTR</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="payment-records-body">
-            <!-- Filled by JS -->
-          </tbody>
-        </table>
-      </div>
+      <h2>Admin Panel</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mobile</th>
+            <th>UPI ID</th>
+            <th>UTR</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="admin-records"></tbody>
+      </table>
     </div>
   </section>
 
-  <script src="script.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>
-
