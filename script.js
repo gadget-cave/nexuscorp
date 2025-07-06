@@ -1,4 +1,4 @@
-// Updated script.js with auto-login, no OTP, admin auto-refresh, permanent storage, and tab switch
+// Updated script.js with individual images per plan
 
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let currentUser = null;
@@ -78,12 +78,12 @@ function showPage(page) {
 
 function loadPlans() {
   const plans = [
-    { amount: 500, daily: 50, days: 20 },
-    { amount: 1000, daily: 100, days: 20 },
-    { amount: 1500, daily: 150, days: 20 },
-    { amount: 2000, daily: 200, days: 20 },
-    { amount: 2500, daily: 250, days: 20 },
-    { amount: 3000, daily: 300, days: 20 },
+    { amount: 500, daily: 50, days: 20, image: "https://i.ibb.co/mrHhyzPG/site-image-protein.jpg" },
+    { amount: 1000, daily: 100, days: 20, image: "https://i.ibb.co/YbkLgpn/investment2.jpg" },
+    { amount: 1500, daily: 150, days: 20, image: "https://i.ibb.co/wW9NSYj/investment3.jpg" },
+    { amount: 2000, daily: 200, days: 20, image: "https://i.ibb.co/djgwSz2/investment4.jpg" },
+    { amount: 2500, daily: 250, days: 20, image: "https://i.ibb.co/ZBJHSm2/investment5.jpg" },
+    { amount: 3000, daily: 300, days: 20, image: "https://i.ibb.co/Pg5FbVF/investment6.jpg" }
   ];
   const box = document.getElementById("plansContainer");
   box.innerHTML = "";
@@ -91,7 +91,7 @@ function loadPlans() {
     const div = document.createElement("div");
     div.className = "plan-box" + (currentUser.plan?.amount === plan.amount && currentUser.accepted ? " gold" : "");
     div.innerHTML = `
-      <img src="https://i.ibb.co/mrHhyzPG/site-image-protein.jpg" alt="plan" />
+      <img src="${plan.image}" alt="Plan Image" />
       <p>Plan: ₹${plan.amount}</p>
       <p>Daily Return: ₹${plan.daily}</p>
       <p>Duration: ${plan.days} Days</p>
