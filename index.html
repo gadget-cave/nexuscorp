@@ -1,32 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Investment Portal</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
 </head>
 <body>
   <div id="app">
-    <!-- Auth Section -->
+
+    <!-- 🔐 Login/Register Section -->
     <div id="authSection" class="auth-flex">
       <div class="auth-box">
-        <h2>Register</h2>
-        <input type="text" id="regName" placeholder="Name" />
-        <input type="text" id="regMobile" placeholder="Mobile Number" />
-        <input type="password" id="regPass" placeholder="Password" />
-        <input type="password" id="regConfirmPass" placeholder="Confirm Password" />
-        <button onclick="registerUser()">Register</button>
-        <hr>
-        <h2>Login</h2>
-        <input type="text" id="loginMobile" placeholder="Mobile Number" />
-        <input type="password" id="loginPass" placeholder="Password" />
-        <button onclick="loginUser()">Login</button>
+        <div class="tab-buttons">
+          <button onclick="switchAuth('login')" id="tabLogin" class="active">Login</button>
+          <button onclick="switchAuth('register')" id="tabRegister">Register</button>
+        </div>
+
+        <div id="loginTab">
+          <h2>Login</h2>
+          <input type="text" id="loginMobile" placeholder="Mobile Number" />
+          <input type="password" id="loginPass" placeholder="Password" />
+          <button onclick="loginUser()">Login</button>
+          <p class="link-text">Don't have an account? <a href="#" onclick="switchAuth('register')">Create one</a></p>
+        </div>
+
+        <div id="registerTab" style="display:none">
+          <h2>Register</h2>
+          <input type="text" id="regName" placeholder="Name" />
+          <input type="text" id="regMobile" placeholder="Mobile Number" />
+          <input type="password" id="regPass" placeholder="Password" />
+          <input type="password" id="regConfirmPass" placeholder="Confirm Password" />
+          <button onclick="registerUser()">Register</button>
+          <p class="link-text">Already have an account? <a href="#" onclick="switchAuth('login')">Login</a></p>
+        </div>
       </div>
     </div>
 
-    <!-- User Dashboard -->
+    <!-- 🧑 User Dashboard -->
     <div id="dashboard" style="display:none">
       <nav>
         <button onclick="showPage('home')">Home</button>
@@ -47,7 +59,7 @@
       </div>
     </div>
 
-    <!-- Admin Panel -->
+    <!-- 🛠️ Admin Panel -->
     <div id="adminPanel" style="display:none">
       <h2>Admin Dashboard</h2>
 
@@ -71,6 +83,7 @@
         </table>
       </div>
     </div>
+
   </div>
 </body>
 </html>
