@@ -1,4 +1,3 @@
-/* This is your optimized and complete style.css file */
 :root {
   --primary: #2563eb;
   --primary-dark: #1d4ed8;
@@ -28,7 +27,7 @@ body {
   padding: 0 20px;
 }
 
-/* Header */
+/* Navigation */
 header {
   background-color: white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -75,7 +74,6 @@ nav {
   text-decoration: none;
   font-weight: 500;
   transition: background-color 0.3s;
-  border: none;
   cursor: pointer;
 }
 
@@ -103,7 +101,7 @@ nav {
   margin: 0 auto 30px;
 }
 
-/* Auth Forms */
+/* Auth Container */
 .auth-container {
   max-width: 500px;
   margin: 0 auto;
@@ -148,97 +146,7 @@ nav {
   font-size: 16px;
 }
 
-/* Features */
-.features, .testimonials {
-  padding: 80px 0;
-}
-
-.section-title {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.section-title h2 {
-  font-size: 36px;
-  color: var(--dark);
-  margin-bottom: 15px;
-}
-
-.section-title p {
-  color: var(--gray);
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.features-grid, .testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.feature-card, .testimonial-card, .plan-card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s;
-}
-
-.feature-card:hover, .plan-card:hover {
-  transform: translateY(-5px);
-}
-
-.feature-icon {
-  width: 60px;
-  height: 60px;
-  background-color: #dbeafe;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: var(--primary);
-  font-size: 24px;
-}
-
-/* Testimonials */
-.testimonial-content {
-  font-style: italic;
-  margin-bottom: 20px;
-  color: var(--gray);
-}
-
-.testimonial-author {
-  display: flex;
-  align-items: center;
-}
-
-.author-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 15px;
-  overflow: hidden;
-}
-
-.author-img img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.author-info h4 {
-  font-size: 18px;
-  color: var(--dark);
-  margin-bottom: 5px;
-}
-
-.author-info p {
-  color: var(--gray);
-  font-size: 14px;
-}
-
-/* Investment Plans */
+/* Plans Section */
 .plans-section {
   padding: 60px 0;
 }
@@ -250,25 +158,45 @@ nav {
   margin-top: 50px;
 }
 
+.plan-card {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+}
+
 .plan-header {
   text-align: center;
   margin-bottom: 20px;
-}
-
-.plan-image img {
-  width: 100%;
-  border-radius: 8px;
 }
 
 .plan-price {
   font-size: 28px;
   font-weight: bold;
   color: var(--primary);
+  margin-top: 10px;
+}
+
+.plan-image {
+  margin: 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.plan-image img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  display: block;
 }
 
 .plan-features {
   list-style: none;
-  margin: 20px 0;
   padding: 0;
 }
 
@@ -318,34 +246,17 @@ nav {
 
 .payment-details {
   display: flex;
-  gap: 30px;
-  align-items: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.upi-qr, .payment-instructions {
-  flex: 1;
+.payment-details input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-.payment-id {
-  font-weight: bold;
-}
-
-.confirm-payment {
-  margin-top: 20px;
-}
-
-.payment-receipt {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 20px;
-}
-
-.payment-receipt h3 {
-  margin-bottom: 15px;
-  color: var(--primary);
-}
-
+/* Admin Section */
 .admin-section {
   padding: 60px 0;
 }
@@ -360,7 +271,7 @@ nav {
   border-collapse: collapse;
 }
 
-.payment-records th, 
+.payment-records th,
 .payment-records td {
   padding: 12px 15px;
   text-align: left;
@@ -442,7 +353,5 @@ footer .copyright {
 
   .payment-details {
     flex-direction: column;
-    gap: 20px;
   }
 }
-
