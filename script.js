@@ -1,133 +1,116 @@
 // script.js
 
-// Global variables
-let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
-let paymentRecords = JSON.parse(localStorage.getItem('paymentRecords')) || [];
+let registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || {};
+let paymentRecords = JSON.parse(localStorage.getItem("paymentRecords")) || [];
 
-// Tab Switching
 function switchTab(tabName) {
-    document.getElementById('login-form').style.display = tabName === 'login' ? 'flex' : 'none';
-    document.getElementById('register-form').style.display = tabName === 'register' ? 'flex' : 'none';
-
-    document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
-    document.querySelector(`.auth-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+  document.getElementById("login-form").style.display = tabName === 'login' ? 'block' : 'none';
+  document.getElementById("register-form").style.display = tabName === 'register' ? 'block' : 'none';
+  document.querySelectorAll(".auth-tab").forEach((tab, i) => {
+    tab.classList.toggle("active", (tabName === 'login' && i === 0) || (tabName === 'register' && i === 1));
+  });
 }
 
-// Register
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+let currentOTP = null;
+
+function sendOTP(mobile) {
+  currentOTP = generateOTP();
+  alert(`Your OTP for registration is: ${currentOTP}`); // Simulated OTP
+}
+
 function handleRegister(event) {
-    event.preventDefault();
-    const mobile = document.getElementById('mobile-number').value;
-    const password = document.getElementById('password').value;
-    const confirmPass = document.getElementById('confirm-password').value;
+  event.preventDefault();
+  const mobile = document.getElementById("reg-mobile").value;
+  const pass = document.getElementById("reg-pass").value;
+  const confirm = document.getElementById("reg-confirm").value;
+  const otp = document.getElementById("reg-otp").value;
 
-    if (!/^[6-9]\d{9}$/.test(mobile)) return alert('Invalid mobile number');
-    if (password.length < 6) return alert('Password must be at least 6 characters');
-    if (password !== confirmPass) return alert('Passwords do not match');
-    if (registeredUsers[mobile]) return alert('Already registered');
+  if (!/^[6-9]\d{9}$/.test(mobile)) return alert("Invalid Indian mobile number");
+  if (pass !== confirm) return alert("Passwords do not match");
+  if (otp != currentOTP) return alert("Invalid OTP");
 
-    registeredUsers[mobile] = password;
-    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-    alert('Registration successful!');
-
-    document.querySelector('.hero').style.display = 'none';
-    document.querySelector('.plans-section').style.display = 'block';
-    document.querySelector('.plans-section').scrollIntoView({ behavior: 'smooth' });
+  if (registeredUsers[mobile]) return alert("Already registered");
+  registeredUsers[mobile] = pass;
+  localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+  localStorage.setItem("currentUser", mobile);
+  alert("Registration successful!");
+  document.querySelector(".hero").style.display = "none";
+  document.querySelector(".plans-section").style.display = "block";
 }
 
-// Login
 function handleLogin(event) {
-    event.preventDefault();
-    const mobile = document.getElementById('login-mobile').value;
-    const password = document.getElementById('login-password').value;
-
-    if (!registeredUsers[mobile]) return alert('Not registered');
-    if (registeredUsers[mobile] !== password) return alert('Incorrect password');
-
-    localStorage.setItem('currentUser', mobile);
-    document.querySelector('.hero').style.display = 'none';
-
-    if (mobile === '9744340057') {
-        document.querySelector('.admin-section').style.display = 'block';
-        loadPaymentRecords();
-    } else {
-        document.querySelector('.plans-section').style.display = 'block';
-    }
-    document.querySelector('.plans-section').scrollIntoView({ behavior: 'smooth' });
+  event.preventDefault();
+  const mobile = document.getElementById("login-mobile").value;
+  const pass = document.getElementById("login-password").value;
+  if (registeredUsers[mobile] !== pass) return alert("Invalid credentials");
+  localStorage.setItem("currentUser", mobile);
+  document.querySelector(".hero").style.display = "none";
+  if (mobile === "9744340057") {
+    loadAdmin();
+  } else {
+    document.querySelector(".plans-section").style.display = "block";
+  }
 }
 
-// Select Plan
-function selectPlan(amount) {
-    document.querySelector('.plans-section').style.display = 'none';
-    document.querySelector('.payment-section').style.display = 'block';
+function selectPlan(amount, name) {
+  document.querySelector(".plans-section").style.display = "none";
+  document.querySelector(".payment-section").style.display = "block";
+  document.getElementById("selected-plan-name").innerText = name;
+  document.getElementById("selected-plan-amount").innerText = amount;
+}
 
-    let planName = amount === 500 ? 'Starter Plan' : amount === 1000 ? 'Silver Plan' : amount === 2000 ? 'Gold Plan' : 'Platinum Plan';
+function showUTRForm() {
+  document.querySelector(".payment-section").style.display = "none";
+  document.querySelector(".utr-section").style.display = "block";
+}
 
-    document.getElementById('selected-plan-info').innerHTML = `
-        <div class="selected-plan">
-            <h3>Selected Plan: ${planName}</h3>
-            <p>Amount: ₹${amount}</p>
-            <p>Daily Return: ₹${amount / 20}</p>
-            <input type="text" id="upi-id" placeholder="Enter your UPI ID" required />
-            <input type="text" id="utr-id" placeholder="Enter UTR/Transaction ID" required />
-            <button class="cta-button confirm-payment">I have made the payment</button>
-        </div>
+function submitUTR() {
+  const upi = document.getElementById("user-upi").value;
+  const utr = document.getElementById("user-utr").value;
+  const amount = document.getElementById("selected-plan-amount").innerText;
+  const mobile = localStorage.getItem("currentUser");
+
+  const rec = { mobile, upiId: upi, utr, amount, status: "Pending", planAccepted: false };
+  paymentRecords.push(rec);
+  localStorage.setItem("paymentRecords", JSON.stringify(paymentRecords));
+  alert("Payment submitted. Waiting for admin approval.");
+  document.querySelector(".utr-section").style.display = "none";
+}
+
+function loadAdmin() {
+  document.querySelector(".admin-section").style.display = "block";
+  const tbody = document.getElementById("admin-table-body");
+  tbody.innerHTML = "";
+  paymentRecords.forEach((rec, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${rec.mobile}</td>
+      <td>${rec.upiId}</td>
+      <td>${rec.utr}</td>
+      <td>₹${rec.amount}</td>
+      <td>${rec.status}</td>
+      <td><button class="accept-btn" onclick="acceptPlan(${index})">Accept</button></td>
     `;
-
-    document.querySelector('.payment-section').scrollIntoView({ behavior: 'smooth' });
-
-    document.querySelector('.confirm-payment').addEventListener('click', () => confirmPayment(amount));
+    tbody.appendChild(tr);
+  });
 }
 
-// Confirm Payment
-function confirmPayment(amount) {
-    const mobile = localStorage.getItem('currentUser');
-    const upiId = document.getElementById('upi-id').value.trim();
-    const utrId = document.getElementById('utr-id').value.trim();
-
-    if (!upiId || !utrId) return alert('Please fill in UPI ID and UTR');
-
-    const record = {
-        mobile,
-        upiId,
-        utr: utrId,
-        amount,
-        status: 'Completed',
-        date: new Date().toLocaleString()
-    };
-
-    paymentRecords.push(record);
-    localStorage.setItem('paymentRecords', JSON.stringify(paymentRecords));
-
-    alert('Payment details submitted successfully!');
-
-    if (mobile === '9744340057') {
-        loadPaymentRecords();
-    }
+function acceptPlan(index) {
+  paymentRecords[index].status = "Accepted";
+  paymentRecords[index].planAccepted = true;
+  localStorage.setItem("paymentRecords", JSON.stringify(paymentRecords));
+  loadAdmin();
+  alert("Plan accepted and activated!");
 }
 
-// Load Admin Payment Records
-function loadPaymentRecords() {
-    const tbody = document.getElementById('payment-records-body');
-    tbody.innerHTML = '';
-
-    paymentRecords.forEach(record => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${record.mobile}</td>
-            <td>${record.upiId}</td>
-            <td>${record.utr}</td>
-            <td>₹${record.amount}</td>
-            <td>${record.status}</td>
-        `;
-        tbody.appendChild(tr);
-    });
+function isPlanAccepted(mobile) {
+  return paymentRecords.some(
+    (r) => r.mobile === mobile && r.planAccepted === true
+  );
 }
 
-// Payment Option Toggle
-document.querySelectorAll('.payment-option').forEach(option => {
-    option.addEventListener('click', function () {
-        document.querySelector('.payment-option.active')?.classList.remove('active');
-        this.classList.add('active');
-    });
-});
 
